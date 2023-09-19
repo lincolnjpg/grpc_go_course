@@ -17,7 +17,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CalculatorServiceClient interface {
-	Calculate(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error)
+	Sum(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error)
 }
 
 type calculatorServiceClient struct {
@@ -28,9 +28,9 @@ func NewCalculatorServiceClient(cc grpc.ClientConnInterface) CalculatorServiceCl
 	return &calculatorServiceClient{cc}
 }
 
-func (c *calculatorServiceClient) Calculate(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error) {
+func (c *calculatorServiceClient) Sum(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error) {
 	out := new(CalculatorResponse)
-	err := c.cc.Invoke(ctx, "/calculator.CalculatorService/Calculate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/calculator.CalculatorService/Sum", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (c *calculatorServiceClient) Calculate(ctx context.Context, in *CalculatorR
 // All implementations must embed UnimplementedCalculatorServiceServer
 // for forward compatibility
 type CalculatorServiceServer interface {
-	Calculate(context.Context, *CalculatorRequest) (*CalculatorResponse, error)
+	Sum(context.Context, *CalculatorRequest) (*CalculatorResponse, error)
 	mustEmbedUnimplementedCalculatorServiceServer()
 }
 
@@ -49,8 +49,8 @@ type CalculatorServiceServer interface {
 type UnimplementedCalculatorServiceServer struct {
 }
 
-func (UnimplementedCalculatorServiceServer) Calculate(context.Context, *CalculatorRequest) (*CalculatorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Calculate not implemented")
+func (UnimplementedCalculatorServiceServer) Sum(context.Context, *CalculatorRequest) (*CalculatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Sum not implemented")
 }
 func (UnimplementedCalculatorServiceServer) mustEmbedUnimplementedCalculatorServiceServer() {}
 
@@ -65,20 +65,20 @@ func RegisterCalculatorServiceServer(s *grpc.Server, srv CalculatorServiceServer
 	s.RegisterService(&_CalculatorService_serviceDesc, srv)
 }
 
-func _CalculatorService_Calculate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CalculatorService_Sum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CalculatorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CalculatorServiceServer).Calculate(ctx, in)
+		return srv.(CalculatorServiceServer).Sum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/calculator.CalculatorService/Calculate",
+		FullMethod: "/calculator.CalculatorService/Sum",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CalculatorServiceServer).Calculate(ctx, req.(*CalculatorRequest))
+		return srv.(CalculatorServiceServer).Sum(ctx, req.(*CalculatorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -88,8 +88,8 @@ var _CalculatorService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*CalculatorServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Calculate",
-			Handler:    _CalculatorService_Calculate_Handler,
+			MethodName: "Sum",
+			Handler:    _CalculatorService_Sum_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

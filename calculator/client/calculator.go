@@ -7,17 +7,17 @@ import (
 	pb "github.com/lincolnjpg/grpc_go_course/calculator/proto"
 )
 
-func doCalculate(c pb.CalculatorServiceClient) {
-	log.Println("doCalculate was invoked")
+func doSum(c pb.CalculatorServiceClient) {
+	log.Println("doSum was invoked")
 
-	res, err := c.Calculate(context.Background(), &pb.CalculatorRequest{
+	res, err := c.Sum(context.Background(), &pb.CalculatorRequest{
 		Num1: 8,
 		Num2: 12,
 	})
 	if err != nil {
-		log.Fatalf("Could not calculate: %v\n", err)
+		log.Fatalf("Could not Sum: %v\n", err)
 		return
 	}
 
-	log.Printf("Calculate's response: %v\n", res.Result)
+	log.Printf("Sum's response: %v\n", res.Result)
 }
