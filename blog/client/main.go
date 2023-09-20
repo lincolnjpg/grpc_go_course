@@ -24,4 +24,5 @@ func main() {
 	readBlog(c, "aNonExistingID")
 	updateBlog(c, id)
 	listBlog(c)
+	deleteBlog(c, id)
 }
