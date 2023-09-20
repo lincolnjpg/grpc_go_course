@@ -1,1 +1,6 @@
 bin
+## SSL
+*.crt
+*.key
+*.csr
+*.pem
