@@ -1,10 +1,11 @@
 package main
 
 import (
+	"log"
+
 	pb "github.com/lincolnjpg/grpc_go_course/blog/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"log"
 )
 
 var addr = "0.0.0.0:50051"
@@ -22,4 +23,5 @@ func main() {
 	readBlog(c, id)
 	readBlog(c, "aNonExistingID")
 	updateBlog(c, id)
+	listBlog(c)
 }
