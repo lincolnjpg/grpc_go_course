@@ -35,10 +35,7 @@ func (s *Server) CreateBlog(ctx context.Context, in *pb.Blog) (*pb.BlogId, error
 			fmt.Sprintf("Cannot convert to OID: %v\n", err),
 		)
 	}
-	return nil, status.Errorf(
-		codes.Internal,
-		fmt.Sprintf("Cannot convert to OID: %v\n", err),
-	)
+
 	return &pb.BlogId{
 		Id: oid.Hex(),
 	}, nil
