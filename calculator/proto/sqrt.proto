@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package calculator;
+
+option go_package = "github.com/lincolnjpg/grpc_go_course/calculator/proto";
+
+message SqrtRequest {
+	int64 num = 1;
+}
+
+message SqrtResponse {
+	double response = 1;
+}
